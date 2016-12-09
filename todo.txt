@@ -1,0 +1,9 @@
+Delay between levels, on death
+Remove walls:
+Levels in high score
+Change colors by level
+Hazards - bouncing things?
+Don't leave for high scores
+More levels
+Better display for score, bonus
+Display High Score

@@ -1,0 +1,36 @@
+<!-- view template -->
+<!-- called from your routes in server.js -->
+
+<!-- templating docs: http://mozilla.github.io/nunjucks/ -->
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Horse Healer: Snake</title>
+    
+    <meta name="description" content="A cool thing made with HyperWeb">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/style.css">
+  </head>
+  <body>
+   
+    <canvas id="canvas" width="200" height="200">
+    </canvas>
+
+    <canvas id="score" width="200" height="200">
+
+    </canvas>
+    
+    
+    <form action="highscore" method="POST" id="highscoreSubmit">
+      <input id="highscoreScore" type="hidden" name="score">
+      <input id="highscoreName" type="hidden" name="name">
+    </form>
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script src="https://underscorejs.org/underscore-min.js"></script>
+    <script src="/client.js"></script>
+  </body>
+</html>
