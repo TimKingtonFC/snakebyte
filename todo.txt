@@ -1,3 +1,7 @@
+Pause
+Auto-pause on blur
+Secure high scores
+Level 18 start is HARD.  Others?
 Color fade
 Hazards - bouncing things?
 Don't leave for high scores

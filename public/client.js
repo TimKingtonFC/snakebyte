@@ -197,6 +197,112 @@ $(function() {
         new Wall(11, 29, 19, true),
         new Wall(31, 39, 19, true),
         ],
+    [new Wall(5, 18, 5, false),
+        new Wall(21, 34, 5, false),
+        new Wall(5, 18, 34, false),
+        new Wall(21, 34, 34, false),
+        new Wall(5, 18, 5, true),
+        new Wall(21, 34, 5, true),
+        new Wall(5, 18, 34, true),
+        new Wall(21, 34, 34, true),
+        new Wall(10, 18, 10, false),
+        new Wall(21, 29, 10, false),
+        new Wall(10, 18, 29, false),
+        new Wall(21, 29, 29, false),
+        new Wall(10, 18, 10, true),
+        new Wall(21, 29, 10, true),
+        new Wall(10, 18, 29, true),
+        new Wall(21, 29, 29, true),
+        ],
+    [new Wall(5, 10, 5, false),
+        new Wall(5, 10, 10, true),
+        new Wall(15, 25, 5, false),
+        new Wall(5, 10, 25, true),
+        new Wall(30, 35, 5, false),
+        new Wall(30, 35, 10, false),
+        new Wall(30, 35, 15, false),
+        new Wall(5, 10, 30, true),
+        new Wall(10, 20, 35, true),
+        new Wall(15, 20, 10, false),
+        new Wall(10, 15, 20, true),
+        new Wall(10, 20, 5, true),
+        new Wall(25, 35, 5, true),
+        new Wall(10, 15, 15, false),
+        new Wall(10, 15, 25, false),
+        new Wall(15, 25, 10, true),
+        new Wall(15, 30, 20, false),
+        new Wall(15, 20, 25, true),
+        new Wall(20, 30, 25, false),
+        new Wall(20, 30, 30, false),
+        new Wall(30, 35, 30, true),
+        new Wall(30, 35, 35, false),
+        new Wall(25, 30, 35, true),
+        new Wall(30, 35, 10, true),
+        new Wall(30, 35, 15, true),
+        new Wall(15, 25, 35, false),
+        ],
+    [new Wall(5, 18, 5, false),
+        new Wall(21, 34, 5, false),
+        new Wall(5, 18, 34, false),
+        new Wall(21, 34, 34, false),
+        new Wall(5, 34, 5, true),
+        new Wall(5, 34, 34, true),
+        new Wall(10, 29, 10, false),
+        new Wall(10, 29, 29, false),
+        new Wall(10, 29, 10, true),
+        new Wall(10, 18, 29, true),
+        new Wall(21, 29, 29, true),
+        ],
+    [new Wall(13, 27, 10, false),
+        new Wall(13, 27, 30, false),
+        new Wall(13, 27, 10, true),
+        new Wall(13, 27, 30, true),
+        new Wall(10, 17, 20, false),
+        new Wall(23, 30, 20, false),
+        new Wall(10, 17, 20, true),
+        new Wall(23, 30, 20, true),
+        ],
+    [new Wall(0, 8, 18, true),
+        new Wall(11, 39, 18, true),
+        new Wall(0, 28, 21, true),
+        new Wall(31, 39, 21, true),
+        ],
+    [new Wall(5, 18, 6, false),
+        new Wall(21, 35, 6, false),
+        new Wall(5, 18, 11, false),
+        new Wall(21, 35, 11, false),
+        new Wall(5, 18, 16, false),
+        new Wall(21, 35, 16, false),
+        new Wall(5, 18, 23, false),
+        new Wall(21, 35, 23, false),
+        new Wall(5, 18, 28, false),
+        new Wall(21, 35, 28, false),
+        new Wall(5, 18, 33, false),
+        new Wall(21, 35, 33, false),
+        new Wall(16, 23, 18, true),
+        new Wall(16, 23, 21, true),
+        ],
+    [new Wall(3, 36, 6, false),
+        new Wall(9, 33, 3, true),
+        new Wall(6, 33, 6, true),
+        new Wall(9, 36, 9, false),
+        new Wall(9, 33, 9, true),
+        new Wall(12, 36, 12, false),
+        new Wall(12, 33, 12, true),
+        new Wall(15, 36, 15, false),
+        new Wall(15, 33, 15, true),
+        new Wall(18, 36, 18, false),
+        new Wall(18, 33, 18, true),
+        new Wall(21, 36, 21, false),
+        new Wall(21, 33, 21, true),
+        new Wall(24, 36, 24, false),
+        new Wall(24, 33, 24, true),
+        new Wall(27, 36, 27, false),
+        new Wall(27, 33, 27, true),
+        new Wall(30, 36, 30, false),
+        new Wall(30, 33, 30, true),
+        new Wall(33, 36, 33, false),
+        ],
   ];
 
   // Returns a random integer between min (included) and max (excluded)
@@ -212,6 +318,7 @@ $(function() {
   var walls;
   var gate = new Wall(19, 21, 0, false);
   var diedThisLevel;
+  var paused = false;
   var timer = 75;
   var popupTimer = 0;
   var popupMessages = [];
@@ -269,7 +376,7 @@ $(function() {
     dy = -1;
     
     timer = TIMER_START;
-    numApples = 1;
+    numApples = 10;
     if (apples.length === 0)
       makeApple();
       
@@ -277,6 +384,11 @@ $(function() {
   }
   
   function onKeyDown(e) {
+    if (e.which === 27) {
+      //  Escape
+      paused = !paused;
+    }
+    
     keyBuffer.push(e.which);
   }
   
@@ -495,6 +607,9 @@ $(function() {
   }
 
   function onTimerTick() {
+    if (paused)
+      return;
+      
     if (handlePopupsTick())
       return;
     
