@@ -269,7 +269,7 @@ $(function() {
     dy = -1;
     
     timer = TIMER_START;
-    numApples = 10;
+    numApples = 1;
     if (apples.length === 0)
       makeApple();
       
@@ -311,6 +311,8 @@ $(function() {
   
   //End the game and show the high scores display
   function crashSnake() {
+    diedThisLevel = true;
+    
     if (lives > 0) {
       lives--;
       startLevel();
@@ -523,13 +525,15 @@ $(function() {
     }
     
     if (numApples === 0 && !snake.isDead && snake.tail[0].y === 0) {
+      level++;
+      lives++;
+      
       if (!diedThisLevel) {
         var bonus = 20 * (level + 1);
         score += bonus;
         showMessage("Bonus: " + bonus + "pts");
-        
-      level++;
-      lives++;
+      }
+      
       diedThisLevel = false;
       startLevel();
     }
