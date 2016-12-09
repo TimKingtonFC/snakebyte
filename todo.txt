@@ -1,7 +1,4 @@
-Delay between levels, on death
-Remove walls:
-Levels in high score
-Change colors by level
+Color fade
 Hazards - bouncing things?
 Don't leave for high scores
 More levels

@@ -102,66 +102,45 @@ $(function() {
   ];
   
   var maps = [
-    {
-      walls: [],
-    },
-    {
-      walls: [new Wall(10, 30, 20, false)],
-    },
-    {
-      walls: [new Wall(10, 30, 20, false),
+    [],
+    [new Wall(10, 30, 20, false)],
+    [new Wall(10, 30, 20, false),
         new Wall(10, 30, 20, true)],
-    },
-    {
-      walls: [new Wall(10, 30, 10, true),
+    [new Wall(10, 30, 10, true),
         new Wall(10, 30, 10, false), 
         new Wall(10, 30, 20, false),
         new Wall(10, 30, 30, false)],
-    },
-    {
-      walls: [new Wall(10, 30, 20, false),
+    [new Wall(10, 30, 20, false),
         new Wall(10, 30, 10, true), 
         new Wall(10, 30, 20, true),
         new Wall(10, 30, 30, true)],
-    },
-    {
-      walls: [new Wall(10, 19, 10, false),
+    [new Wall(10, 19, 10, false),
         new Wall(22, 30, 10, false), 
         new Wall(10, 30, 10, true),
         new Wall(10, 30, 30, true),
         new Wall(10, 30, 30, false)],
-    },
-    {
-      walls: [new Wall(10, 30, 10, true),
+    [new Wall(10, 30, 10, true),
         new Wall(10, 30, 30, true), 
         new Wall(10, 25, 20, false),
         new Wall(15, 30, 10, false),
         new Wall(15, 30, 30, false)],
-    },
-    {
-      walls: [new Wall(0, 18, 19, false),
+    [new Wall(0, 18, 19, false),
         new Wall(21, 39, 20, false),],
-    },
-    {
-      walls: [new Wall(10, 30, 5, true),
+    [new Wall(10, 30, 5, true),
         new Wall(10, 30, 10, true),
         new Wall(10, 30, 15, true),
         new Wall(10, 30, 20, true),
         new Wall(10, 30, 25, true),
         new Wall(10, 30, 30, true),
         new Wall(10, 30, 35, true),],
-    },
-    {
-      walls: [new Wall(10, 30, 10, true),
+    [new Wall(10, 30, 10, true),
         new Wall(10, 30, 30, true), 
         new Wall(10, 25, 10, false),
         new Wall(10, 25, 20, false),
         new Wall(10, 25, 30, false),
         new Wall(15, 30, 15, false),
         new Wall(15, 30, 25, false)],
-    },
-    {
-      walls: [new Wall(10, 30, 10, false),
+    [new Wall(10, 30, 10, false),
         new Wall(10, 30, 30, false), 
         new Wall(10, 30, 20, true),
         new Wall(10, 18, 10, true),
@@ -169,9 +148,7 @@ $(function() {
         new Wall(21, 30, 30, true),
         new Wall(21, 30, 10, true),
         ],
-    },
-    {
-      walls: [new Wall(10, 30, 10, false),
+    [new Wall(10, 30, 10, false),
         new Wall(10, 30, 30, false), 
         new Wall(10, 19, 10, true),
         new Wall(10, 19, 30, true),
@@ -179,9 +156,7 @@ $(function() {
         new Wall(21, 30, 10, true),
         new Wall(18, 22, 20, true),
         ],
-    },
-    {
-      walls: [new Wall(7, 13, 7, true),
+    [new Wall(7, 13, 7, true),
         new Wall(7, 13, 13, false),
         new Wall(13, 19, 7, false),
         new Wall(7, 13, 19, true),
@@ -198,39 +173,30 @@ $(function() {
         new Wall(19, 31, 25, false),
         new Wall(25, 31, 31, true),
         ],
-    },
-    {
-      walls: [new Wall(0, 17, 19, false),
+    [new Wall(0, 17, 19, false),
         new Wall(0, 8, 17, true),
         new Wall(11, 19, 17, true),
         new Wall(22, 39, 20, false),
         new Wall(20, 28, 22, true),
         new Wall(31, 39, 22, true),
         ],
-    },
-    {
-      walls: [new Wall(0, 16, 19, false),
+    [new Wall(0, 16, 19, false),
         new Wall(22, 39, 19, false),
         new Wall(0, 16, 19, true),
         new Wall(22, 39, 19, true),
         ],
-    },
-    {
-      walls: [new Wall(0, 17, 17, false),
+    [new Wall(0, 17, 17, false),
         new Wall(22, 39, 22, false),
         new Wall(0, 17, 22, true),
         new Wall(22, 39, 17, true),
         ],
-    },
-    {
-      walls: [new Wall(0, 9, 19, false),
+    [new Wall(0, 9, 19, false),
         new Wall(11, 29, 19, false),
         new Wall(31, 39, 19, false),
         new Wall(0, 9, 19, true),
         new Wall(11, 29, 19, true),
         new Wall(31, 39, 19, true),
         ],
-    },
   ];
 
   // Returns a random integer between min (included) and max (excluded)
@@ -240,13 +206,15 @@ $(function() {
   }
   
   var lives = 2;
-  var level = 16;
+  var level = 0;
   var numApples;
   var apples = [];
   var walls;
   var gate = new Wall(19, 21, 0, false);
   var diedThisLevel;
   var timer = 75;
+  var popupTimer = 0;
+  var popupMessages = [];
   
   // this var is called snake because it's easier than tetris
   var snake = {
@@ -293,7 +261,7 @@ $(function() {
       new Wall(0, 39, 39, true),
     ];
     
-    Array.prototype.push.apply(walls, getMap().walls);
+    Array.prototype.push.apply(walls, getMap());
     
     snake.tail = [ new Point(WIDTH / 2, HEIGHT - 2) ];
     snake.length = 12;
@@ -304,6 +272,8 @@ $(function() {
     numApples = 10;
     if (apples.length === 0)
       makeApple();
+      
+    showMessage('Level ' + (level + 1));
   }
   
   function onKeyDown(e) {
@@ -482,8 +452,50 @@ $(function() {
     ctx.fillRect(0 * TILE, (26 - height) * TILE, TILE, TILE * height);
     ctx.fillRect(39 * TILE, (26 - height) * TILE, TILE, TILE * height);
   }
+  
+  function showPopup(text) {
+    popupTimer = 20;
+    var colors = getColors();
+    $('.levelname').text(text);
+    $('.popup')
+      .css('background-color', colors.bgColor)
+      .css('border-color', colors.wallColor)
+      .css('top', (400 - $('.popup').outerHeight() / 2) + 'px')
+      .css('left', (400 - $('.popup').outerWidth() / 2) + 'px')
+      .show();
+  }
+  
+  function handlePopupsTick() {
+    if (popupTimer < 1)
+      return false;
+      
+    popupTimer--;
+    if (popupTimer === 0) {
+      popupMessages.shift();
+      if (popupMessages.length > 0) {
+        showPopup(popupMessages[0]);
+      }
+      else {
+        $('.popup').hide();
+        keyBuffer = [];
+      }
+    }
+      
+    drawWalls();
+    return true;
+  }
+  
+  function showMessage(text) {
+    popupMessages.push(text);
+    
+    if (popupMessages.length === 1)
+      showPopup(text);
+  }
 
   function onTimerTick() {
+    if (handlePopupsTick())
+      return;
+    
     if (snake.isDead) {
       return;
     }
@@ -499,18 +511,22 @@ $(function() {
     
     updateStats();
     
-    timer--;
-    if (timer === 0) {
-      numApples += 3;
-      makeApple();
-      makeApple();
-      makeApple();
-      timer = TIMER_START;
+    if (apples.length > 0) {
+      timer--;
+      if (timer === 0) {
+        numApples += 3;
+        makeApple();
+        makeApple();
+        makeApple();
+        timer = TIMER_START;
+      }
     }
     
     if (numApples === 0 && !snake.isDead && snake.tail[0].y === 0) {
-      if (!diedThisLevel)
-        score += 20 * (level + 1);
+      if (!diedThisLevel) {
+        var bonus = 20 * (level + 1);
+        score += bonus;
+        showMessage("Bonus: " + bonus + "pts");
         
       level++;
       lives++;
