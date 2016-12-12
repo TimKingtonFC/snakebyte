@@ -1,9 +1,3 @@
-// client-side js
-// run by the browser each time your view template is loaded
-
-// by default, you've got jQuery and Underscore
-// Add other scripts at the bottom of index.html
-
 $(function() {
   var TILE = 20;
   var WIDTH = 40;
@@ -11,6 +5,8 @@ $(function() {
   var TIMER_START = 75;
   
   var canvas = document.getElementById('canvas');
+  TILE = parseInt(Math.min(TILE, (document.documentElement.clientHeight - 50) / HEIGHT));
+  
   canvas.width = TILE * WIDTH;
   canvas.height = TILE * HEIGHT;
   var ctx = canvas.getContext("2d");
@@ -384,9 +380,12 @@ $(function() {
   }
   
   function onKeyDown(e) {
-    if (e.which === 27) {
-      //  Escape
-      paused = !paused;
+    if (paused) {
+      paused = false;
+    }
+    else if (e.which === 27 || e.which === 32) {
+      //  Escape or spacebar
+      paused = true;
     }
     
     keyBuffer.push(e.which);
@@ -574,8 +573,8 @@ $(function() {
     $('.popup')
       .css('background-color', colors.bgColor)
       .css('border-color', colors.wallColor)
-      .css('top', (400 - $('.popup').outerHeight() / 2) + 'px')
-      .css('left', (400 - $('.popup').outerWidth() / 2) + 'px')
+      .css('top', ((TILE * HEIGHT - $('.popup').outerHeight()) / 2) + 'px')
+      .css('left', ((TILE * WIDTH - $('.popup').outerWidth()) / 2) + 'px')
       .show();
   }
   
@@ -644,7 +643,7 @@ $(function() {
       lives++;
       
       if (!diedThisLevel) {
-        var bonus = 20 * (level + 1);
+        var bonus = 20 * level;
         score += bonus;
         showMessage("Bonus: " + bonus + "pts");
       }
@@ -668,8 +667,13 @@ $(function() {
     context.fillText("Lives: " + lives, 20, 80);
   }
   
+  function onBlur() {
+    paused = true;
+  }
+  
   
 startLevel();
 window.addEventListener("keydown", onKeyDown, true);
+window.addEventListener("blur", onBlur, true);
 
 });

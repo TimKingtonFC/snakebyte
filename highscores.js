@@ -16,7 +16,8 @@ function insertScore(scores, score) {
   
   var i = 0;
   while(i < scores.length &&
-    (score.level <= scores[i].level || score.score <= scores[i].score))
+    (score.level < scores[i].level || 
+    (score.level == scores[i].level && score.score <= scores[i].score)))
     i++;
     
   if (i < NUM_HIGHSCORES) {
