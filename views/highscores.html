@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Horse Healer: High Scores</title>
+    
+    <meta name="description" content="A cool thing made with HyperWeb">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/style.css">
+  </head>
+  <body>
+    <table>
+      <tr><th>Name</th><th>Level</th><th>Score</th></tr>
+      {% for score in scores %}
+        <tr>
+          {% if score.name == "" %}
+            {% if loop.index0 == ixNew %}
+              <td>
+                <form method="POST">
+                  <input type="text" name="name" placeholder="Enter your name">
+                  <input type="hidden" name="score" value="{{ score.score }}">
+                  <input type="hidden" name="level" value="{{ score.level }}">
+                </form>
+              </td>
+            {% else %}
+              <td>Voldemort</td>
+            {% endif %}
+          {% else %}
+            <td>{{score.name}}</td>
+          {% endif %}
+          <td>{{score.level}}</td>
+          <td>{{score.score}}</td>
+        </tr>
+      {% endfor %}
+    </table>
+    <a href="/">Play Again</a>
+  </body>
+</html>

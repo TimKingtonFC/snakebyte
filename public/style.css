@@ -1,0 +1,53 @@
+/* styles */
+/* called by your view template */
+/* p.s. vendor prefixes are added automatically */
+
+
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: helvetica, arial, sans-serif;
+  height: 100vh;
+  width: 100vw;
+  margin: 0;
+  padding: 0;
+}
+
+canvas {
+  border: 1px solid black;
+}
+
+#canvas {
+  background: #F6E8CD;
+}
+
+#highscoreSubmit {
+  display: none;
+}
+
+a.selected {
+  background-color:#1F75CC;
+  color:white;
+  z-index:100;
+}
+
+.popup {
+  background-color:#FFFFFF;
+  border:3px solid #999999;
+  cursor:default;
+  display:none;
+  margin-top: 15px;
+  position:absolute;
+  text-align:center;
+  width:150px;
+  z-index:50;
+  padding: 25px 25px 20px;
+}
+
+.popup p, .popup.div {
+  margin: 8px 0;
+  padding-bottom: 8px;
+}
